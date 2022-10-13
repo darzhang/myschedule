@@ -11,7 +11,8 @@ export default function Signup() {
   const onSubmit = (data) => signUp(data.email, data.password, router);
 
   return (
-    <Box>
+    <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+      <Typography variant="h3">Sign Up</Typography>
       <Box sx={{height:"10px"}}/>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", m: "10px"}}>
