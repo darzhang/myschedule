@@ -1,7 +1,5 @@
 import {initializeApp} from 'firebase/app';
-import {createUserWithEmailAndPassword, getAuth} from 'firebase/auth';
-import {useRouter} from 'next/router';
-import Swal from 'sweetalert2';
+import {getAuth} from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {

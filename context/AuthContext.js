@@ -1,6 +1,7 @@
-import { onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react"
+import Swal from "sweetalert2";
 import { auth } from "../config/firebase";
 
 
@@ -32,7 +33,7 @@ export default function AuthContextProvider({children}) {
   // save user email and password in firebase authentication
   const signup = async (email, password) => {
   try {
-    const user = await createUserWithEmailAndPassword(auth, email, password);
+    await createUserWithEmailAndPassword(auth, email, password);
     Swal.fire({
       icon: 'success',
       title: 'You have succefully sign up',

@@ -5,7 +5,7 @@ export default function UserProfile() {
   return (
     <>
       <div>UserProfile</div>
-      <div>{user.name}</div>
+      <div>{user.email}</div>
     </>
   )
 }
