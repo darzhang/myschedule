@@ -2,8 +2,11 @@ import { CalendarMonth } from "@mui/icons-material";
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import Link from "next/link";
+import { useAuth } from "../context/AuthContext";
+import MenuBar from "./MenuBar";
 
 export default function Navbar() {
+  const {user} = useAuth();
   return (
     <div>
       <AppBar position="relative">
@@ -19,9 +22,7 @@ export default function Navbar() {
               </Typography>
             </Box>
           </Link>
-          <Link href={"/signup"}>
-            <Button color="inherit" variant="outlined">Log In</Button>
-          </Link>
+          <MenuBar/>
         </Toolbar>
       </AppBar>
     </div>

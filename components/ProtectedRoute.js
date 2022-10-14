@@ -12,10 +12,10 @@ export default function ProtectedRoute({children}) {
     if(!user) {
       Swal.fire({
         icon: "error",
-        title: "You have not logged in yet"
+        title: "You have not signed in yet"
       }).then((result) => {
         if(result.isConfirmed){
-          router.push("/login")
+          router.push("/signin")
         }
       })
     }

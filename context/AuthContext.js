@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react"
 import Swal from "sweetalert2";
@@ -39,7 +39,7 @@ export default function AuthContextProvider({children}) {
         title: 'You have succefully sign up',
       }).then((result) => {
         if(result.isConfirmed){
-          router.push('/')
+          router.push('/');
         }
       });
       
@@ -56,16 +56,16 @@ export default function AuthContextProvider({children}) {
     }
   }
 
-// login using existing user details
+// signin using existing user details
 const signin = async(email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     Swal.fire({
       icon: 'success',
-      title: 'You have succefully sign up',
+      title: 'You have succefully Sign in',
     }).then((result) => {
       if(result.isConfirmed){
-        router.push('/')
+        router.push('/');
       }
     });
     
@@ -86,19 +86,19 @@ const signin = async(email, password) => {
         break;
     }
   }
-  await signInWithEmailAndPassword(auth, email, password);
-  Swal.fire({
+}
+
+//sign the user out
+const signout = async() => {
+  router.push('/');
+  signOut(auth).then(Swal.fire({
     icon: 'success',
-    title: 'You have succesfully log in',
-  }).then((result) => {
-    if(result.isConfirmed){
-      router.push('/')
-    }
-  })
+    title: 'You have succesfully Sign out'
+  }))
 }
 
   return (
-    <AuthContext.Provider value={{user, signup, signin}}>
+    <AuthContext.Provider value={{user, signup, signin, signout}}>
       {loading ? null : children}
     </AuthContext.Provider>
   )

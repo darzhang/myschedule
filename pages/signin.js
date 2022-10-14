@@ -5,15 +5,15 @@ import { useAuth } from "../context/AuthContext";
 import { Box } from "@mui/system";
 import Link from "next/link";
 
-export default function LoginPage() {
+export default function SignInPage() {
   const {control, handleSubmit, formState: {errors}} = useForm();
   const {signin} = useAuth();
 
-  const onSubmit = (data) => signup(data.email, data.password);
+  const onSubmit = (data) => signin(data.email, data.password);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{display: "flex", flexDirection:"column", alignItems:"center", m:"0 auto", width:"200px"}}>
-        <Typography variant="h3">Log In</Typography>
+        <Typography variant="h3">Sign In</Typography>
         <InputField 
           name={"email"} 
           control={control} 
