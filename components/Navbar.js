@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Navbar() {
   return (
     <div>
-      <AppBar>
+      <AppBar position="relative">
         <Toolbar>
           <Link href={"/"}>
             <Box sx={{flexGrow: 1, display: "flex", flexDirection: "row", alignItems: "center"}}>

@@ -15,32 +15,3 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-
-// save user email and password in firebase authentication
-export const signUp = async (email, password, router) => {
-  try {
-    const user = await createUserWithEmailAndPassword(auth, email, password);
-    Swal.fire({
-      icon: 'success',
-      title: 'You have succefully sign up',
-    }).then((result) => {
-      if(result.isConfirmed){
-        router.push('/')
-      }
-    });
-    
-  } catch (e) {
-    const type = e.code;
-    switch(type) {
-      case 'auth/email-already-in-use':
-        Swal.fire({
-          icon: 'error',
-          title: 'Email has been used for another account'
-        });
-        break;
-    }
-  }
-  
-  
-
-}
