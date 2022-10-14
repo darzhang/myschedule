@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react"
 import Swal from "sweetalert2";
@@ -32,8 +32,34 @@ export default function AuthContextProvider({children}) {
 
   // save user email and password in firebase authentication
   const signup = async (email, password) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      Swal.fire({
+        icon: 'success',
+        title: 'You have succefully sign up',
+      }).then((result) => {
+        if(result.isConfirmed){
+          router.push('/')
+        }
+      });
+      
+    } catch (e) {
+      const type = e.code;
+      switch(type) {
+        case 'auth/email-already-in-use':
+          Swal.fire({
+            icon: 'error',
+            title: 'Email has been used for another account'
+          });
+          break;
+      }
+    }
+  }
+
+// login using existing user details
+const signin = async(email, password) => {
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(auth, email, password);
     Swal.fire({
       icon: 'success',
       title: 'You have succefully sign up',
@@ -46,23 +72,33 @@ export default function AuthContextProvider({children}) {
   } catch (e) {
     const type = e.code;
     switch(type) {
-      case 'auth/email-already-in-use':
+      case 'auth/user-not-found':
         Swal.fire({
           icon: 'error',
-          title: 'Email has been used for another account'
+          title: 'There is no user corresponding to the email'
+        });
+        break;
+      case 'auth/wrong-password':
+        Swal.fire({
+          icon: 'error',
+          title: 'Wrong password for email provided'
         });
         break;
     }
   }
-
-  // login using existing user details
-  
-  
-
+  await signInWithEmailAndPassword(auth, email, password);
+  Swal.fire({
+    icon: 'success',
+    title: 'You have succesfully log in',
+  }).then((result) => {
+    if(result.isConfirmed){
+      router.push('/')
+    }
+  })
 }
 
   return (
-    <AuthContext.Provider value={{user, signup}}>
+    <AuthContext.Provider value={{user, signup, signin}}>
       {loading ? null : children}
     </AuthContext.Provider>
   )
