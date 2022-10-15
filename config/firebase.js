@@ -1,4 +1,4 @@
-import {initializeApp} from 'firebase/app';
+import {getApp, getApps, initializeApp} from 'firebase/app';
 import {getAuth} from 'firebase/auth';
 
 // Your web app's Firebase configuration
@@ -11,5 +11,9 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-const app = initializeApp(firebaseConfig);
+if(getApps.length == 0) {
+  initializeApp(firebaseConfig);
+}
+
+export const app = getApp();
 export const auth = getAuth(app);
