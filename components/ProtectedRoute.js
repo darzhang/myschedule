@@ -12,7 +12,7 @@ export default function ProtectedRoute({children}) {
     if(!user) {
       Swal.fire({
         icon: "error",
-        title: "You have not signed in yet"
+        title: "You are not authorized"
       }).then((result) => {
         if(result.isConfirmed){
           router.push("/signin")
@@ -22,6 +22,6 @@ export default function ProtectedRoute({children}) {
   }, [router, user]);
 
   return (
-    <>{user ? children : <Typography variant="h2">You are not authorized</Typography>}</>
+    <>{user ? children : null}</>
   )
 }
