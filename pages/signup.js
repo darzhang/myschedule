@@ -1,15 +1,20 @@
-import { Button,Typography } from "@mui/material";
+import { Button,CircularProgress,Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useForm} from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import InputField from "../components/InputField";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function SignUpPage() {
   const {control, handleSubmit, formState: {errors}} = useForm();
   const {signup} = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = (data) => signup(data.email, data.password);
+  const onSubmit = (data) => {
+    setIsLoading(true);
+    signup(data.email, data.password);
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -39,7 +44,10 @@ export default function SignUpPage() {
             helperText={""}
             type={"text"}
           />
-          <Button type="submit" variant="outlined">SIGN UP</Button>
+          {!isLoading ? 
+          <Button sx={{width:"100px"}} type="submit" variant="outlined">Sign Up</Button> : 
+          <Box sx={{width:"100px", display:"flex", justifyContent:"center"}}><CircularProgress/></Box>
+        }
           <Box sx={{mt: "10px", alignSelf:"start"}}>
             <Link href={"/signin"}>
               <Typography sx={{fontSize:"10px", fontStyle:"italic", textDecoration: "underline"}}>Have an account?Log in.</Typography>

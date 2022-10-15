@@ -34,13 +34,10 @@ export default function AuthContextProvider({children}) {
   const signup = async (email, password) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      router.push('/');
       Swal.fire({
         icon: 'success',
         title: 'You have succefully sign up',
-      }).then((result) => {
-        if(result.isConfirmed){
-          router.push('/');
-        }
       });
       
     } catch (e) {
@@ -60,13 +57,10 @@ export default function AuthContextProvider({children}) {
 const signin = async(email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
+    router.push('/');
     Swal.fire({
       icon: 'success',
       title: 'You have succefully Sign in',
-    }).then((result) => {
-      if(result.isConfirmed){
-        router.push('/');
-      }
     });
     
   } catch (e) {
@@ -90,11 +84,11 @@ const signin = async(email, password) => {
 
 //sign the user out
 const signout = async() => {
-  router.push('/');
   signOut(auth).then(Swal.fire({
     icon: 'success',
     title: 'You have succesfully Sign out'
-  }))
+  }));
+  router.push('/signin')
 }
 
   return (
