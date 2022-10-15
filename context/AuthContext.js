@@ -1,8 +1,9 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react"
 import Swal from "sweetalert2";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 
 
 const AuthContext = createContext();
@@ -15,11 +16,11 @@ export default function AuthContextProvider({children}) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log(user);
       if(user) {
         setUser({
           uid: user.uid,
           email: user.email,
-          name: user.name,
         });
       }else {
         setUser(null);
@@ -30,31 +31,35 @@ export default function AuthContextProvider({children}) {
     return unsubscribe;
   }, [])
 
-  // save user email and password in firebase authentication
-  const signup = async (email, password) => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.push('/');
-      Swal.fire({
-        icon: 'success',
-        title: 'You have succefully sign up',
-      });
-      
-    } catch (e) {
-      const type = e.code;
-      switch(type) {
-        case 'auth/email-already-in-use':
-          Swal.fire({
-            icon: 'error',
-            title: 'Email has been used for another account'
-          });
-          break;
-      }
-    }
+// save user email and password in firebase authentication
+const signup = async (email, password, name, setIsLoading) => {
+  try {
+    const userResult = await createUserWithEmailAndPassword(auth, email, password);
+    console.log(name, email, db, userResult.user.uid)
+    const docRef = await setDoc(doc(db, "users", userResult.user.uid), {
+      name: name,
+      email : email
+    });
+    console.log(docRef)
+    router.push('/');
+    Swal.fire({
+      icon: 'success',
+      title: 'You have succefully sign up',
+    });
+    
+  } catch (e) {
+    const type = e.code;
+    console.log(e)
+    Swal.fire({
+      icon: 'error',
+      title: type
+    });
+    setIsLoading(false);
   }
+}
 
 // signin using existing user details
-const signin = async(email, password) => {
+const signin = async(email, password, setIsLoading) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     router.push('/');
@@ -65,30 +70,30 @@ const signin = async(email, password) => {
     
   } catch (e) {
     const type = e.code;
-    switch(type) {
-      case 'auth/user-not-found':
-        Swal.fire({
-          icon: 'error',
-          title: 'There is no user corresponding to the email'
-        });
-        break;
-      case 'auth/wrong-password':
-        Swal.fire({
-          icon: 'error',
-          title: 'Wrong password for email provided'
-        });
-        break;
-    }
+    Swal.fire({
+      icon: 'error',
+      title: type
+    });
+    setIsLoading(false);
   }
 }
 
 //sign the user out
 const signout = async() => {
-  signOut(auth).then(Swal.fire({
-    icon: 'success',
-    title: 'You have succesfully Sign out'
-  }));
-  router.push('/signin')
+  try{
+    router.push('/signin');
+    await signOut(auth);
+    Swal.fire({
+      icon: 'success',
+      title: 'You have succesfully Sign out'
+    });
+  }catch (e) {
+    const type = e.code;
+    Swal.fire({
+      icon: 'error',
+      title: type
+    });
+  }
 }
 
   return (

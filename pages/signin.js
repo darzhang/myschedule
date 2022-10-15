@@ -13,7 +13,7 @@ export default function SignInPage() {
 
   const onSubmit = (data) => {
     setIsLoading(true);
-    signin(data.email, data.password);
+    signin(data.email, data.password, setIsLoading);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

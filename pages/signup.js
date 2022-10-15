@@ -13,7 +13,7 @@ export default function SignUpPage() {
 
   const onSubmit = (data) => {
     setIsLoading(true);
-    signup(data.email, data.password);
+    signup(data.email, data.password, data.name, setIsLoading);
   }
 
   return (
