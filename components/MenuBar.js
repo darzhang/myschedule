@@ -1,5 +1,5 @@
 import { MenuOutlined } from "@mui/icons-material";
-import { Button, IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -32,7 +32,7 @@ export default function MenuBar() {
         onClose={handleClose}>
         {!user && <MenuItem onClick={() => handleClick("/signin")}>Sign In</MenuItem>}
         {user && <MenuItem onClick={() => handleClick("/user/profile")}>Profile</MenuItem>}
-        {user && <MenuItem onClick={signout}>Sign Out</MenuItem>}
+        {user && <MenuItem onClick={() => {handleClose(); signout()}}>Sign Out</MenuItem>}
       </Menu>
     </div>
   )
