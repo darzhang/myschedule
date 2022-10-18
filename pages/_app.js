@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
-import Layout from '../components/Layout'
+import Layout from '../components/Layout';
 import ProtectedRoute from '../components/ProtectedRoute';
-import AuthContextProvider from '../context/AuthContext'
-import '../styles/globals.css'
+import AuthContextProvider from '../context/AuthContext';
+import '../styles/globals.css';
+import '../styles/react-big-calendar.css';
 
 const noAuthRequired = ['/', '/signin', '/signup'];
 
