@@ -11,7 +11,7 @@ export default function profile() {
 
   useEffect(() => {
     const fetchUser = async() => {
-      const docRef = doc(db, "users", user.uid);
+      const docRef = doc(db, process.env.NEXT_PUBLIC_FIREBASE_USER_COLLECTION, user.uid);
       console.log(docRef)
       const docSnap = await getDoc(docRef);
       console.log(docSnap.data())

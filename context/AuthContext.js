@@ -36,9 +36,10 @@ const signup = async (email, password, name, setIsLoading) => {
   try {
     const userResult = await createUserWithEmailAndPassword(auth, email, password);
     console.log(name, email, db, userResult.user.uid)
-    const docRef = await setDoc(doc(db, "users", userResult.user.uid), {
+    const docRef = await setDoc(doc(db, process.env.NEXT_PUBLIC_FIREBASE_USER_COLLECTION, userResult.user.uid), {
       name: name,
-      email : email
+      email : email,
+      events: []
     });
     console.log(docRef)
     router.push('/');
