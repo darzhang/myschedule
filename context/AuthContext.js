@@ -81,12 +81,14 @@ const signin = async(email, password, setIsLoading) => {
 //sign the user out
 const signout = async() => {
   try{
-    router.push('/signin');
-    await signOut(auth);
-    Swal.fire({
-      icon: 'success',
-      title: 'You have succesfully Sign out'
-    });
+    router.push('/signin').then(async() => {
+      await signOut(auth);
+      Swal.fire({
+        icon: 'success',
+        title: 'You have succesfully Sign out'
+      });
+    })
+    
   }catch (e) {
     const type = e.code;
     Swal.fire({
