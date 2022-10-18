@@ -32,6 +32,7 @@ export default function MenuBar() {
         onClose={handleClose}>
         {!user && <MenuItem onClick={() => handleClick("/signin")}>Sign In</MenuItem>}
         {user && <MenuItem onClick={() => handleClick("/user/profile")}>Profile</MenuItem>}
+        {user && <MenuItem onClick={() => handleClick("/user/schedule")}>Schedule</MenuItem>}
         {user && <MenuItem onClick={() => {handleClose(); signout()}}>Sign Out</MenuItem>}
       </Menu>
     </div>
