@@ -8,12 +8,14 @@ import { useState } from 'react';
 
 export default function AddEventDialog({open, handleClose, onSubmit}) {
   const [startDate, setStartDate] = useState(moment().toDate());
+  const [description, setDescription] = useState("");
   const [endDate, setEndDate] = useState(moment().toDate());
   const [eventName, setEventName] = useState("");
 
   const handleSubmit = () => {
     const event = {
       title: eventName,
+      description: description,
       start: startDate,
       end: endDate
     };
@@ -25,6 +27,7 @@ export default function AddEventDialog({open, handleClose, onSubmit}) {
   const closeDialog = () => {
     handleClose();
     setEventName("");
+    setDescription("");
     setStartDate(moment().toDate());
     setEndDate(moment().toDate());
   }
@@ -37,7 +40,16 @@ export default function AddEventDialog({open, handleClose, onSubmit}) {
           sx={{alignSelf: "center", mb: "20px"}}
           label="Event Name"
           value={eventName}
-          onChange={(event) => setEventName(event.target.value)} 
+          fullWidth
+          onChange={(e) => setEventName(e.target.value)} 
+        />
+        <TextField
+          sx={{alignSelf: "center", mb: "20px"}}
+          label="Event Description"
+          value={description}
+          fullWidth
+          multiline
+          onChange={(e) => setDescription(e.target.value)} 
         />
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <Box sx={{display: "flex", flexDirection: "row"}}>
