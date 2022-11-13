@@ -1,12 +1,15 @@
 import { Box, Button, Typography } from "@mui/material";
 import {
+  arrayRemove,
   collection,
+  deleteDoc,
   doc,
   documentId,
   getDoc,
   getDocs,
   query,
   Timestamp,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import moment from "moment";
@@ -14,17 +17,18 @@ import { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import Swal from "sweetalert2";
 import AddEventDialog from "../../components/AddEventDialog";
+import ListEvent from "../../components/ListEvent";
 import { db } from "../../config/firebase";
 import { useAuth } from "../../context/AuthContext";
 
 export default function SchedulePage() {
   const localizer = momentLocalizer(moment); // or globalizeLocalizer
-  const [event, setEvent] = useState([]);
+  const [events, setEvents] = useState([]);
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
 
   const onSubmit = (data) => {
-    setEvent([...event, data]);
+    setEvents([...events, data]);
   };
 
   const handleSelectEvent = (event) => {
@@ -35,23 +39,50 @@ export default function SchedulePage() {
     });
   };
 
+  const handleDelete = (eventId, title) => {
+    Swal.fire({
+      icon: "warning",
+      title: "Delete Event",
+      text: `Are you sure you want to delete "${title}"`,
+      showDenyButton: true,
+      confirmButtonText: "Delete",
+      denyButtonText: "Cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteDoc(
+          doc(db, process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION, eventId)
+        );
+        await updateDoc(
+          doc(db, process.env.NEXT_PUBLIC_FIREBASE_USER_COLLECTION, user.uid),
+          {
+            events: arrayRemove(eventId),
+          }
+        );
+        setEvents(events.filter((event) => event.id != eventId));
+      }
+    });
+  };
+
   useEffect(() => {
     if (user) {
       const fetchEvents = async () => {
         const eventIds = await fetchEventIds();
-        const q = query(
-          collection(db, process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION),
-          where(documentId(), "in", eventIds)
-        );
-        const querySnapshot = await getDocs(q);
-        const eventList = [];
-        querySnapshot.forEach((doc) => {
-          const oneEvent = doc.data();
-          oneEvent.start = oneEvent.start.toDate();
-          oneEvent.end = oneEvent.end.toDate();
-          eventList.push(oneEvent);
-        });
-        setEvent([...eventList]);
+        if (eventIds.length > 0) {
+          const q = query(
+            collection(db, process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION),
+            where(documentId(), "in", eventIds)
+          );
+          const querySnapshot = await getDocs(q);
+          const eventList = [];
+          querySnapshot.forEach((doc) => {
+            const oneEvent = doc.data();
+            oneEvent.id = doc.id;
+            oneEvent.start = oneEvent.start.toDate();
+            oneEvent.end = oneEvent.end.toDate();
+            eventList.push(oneEvent);
+          });
+          setEvents([...eventList]);
+        }
       };
       const fetchEventIds = async () => {
         const userRef = doc(
@@ -84,13 +115,14 @@ export default function SchedulePage() {
         Add Event
       </Button>
       <Box sx={{ height: "600px", m: "30px" }}>
-        <Calendar
+        {/* <Calendar
           localizer={localizer}
-          events={event}
+          events={events}
           startAccessor="start"
           endAccessor="end"
           onSelectEvent={handleSelectEvent}
-        />
+        /> */}
+        <ListEvent events={events} handleDelete={handleDelete} />
       </Box>
     </>
   );
