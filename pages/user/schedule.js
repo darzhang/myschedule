@@ -1,5 +1,9 @@
-import { ReplyOutlined, ShareOutlined } from "@mui/icons-material";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  ContentCopyOutlined,
+  ReplyOutlined,
+  ShareOutlined,
+} from "@mui/icons-material";
+import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
 import {
   arrayRemove,
   collection,
@@ -115,7 +119,9 @@ export default function SchedulePage() {
           Add Event
         </Button>
         <Button
-          onClick={() => setShared(!shared)}
+          onClick={() => {
+            setShared(!shared);
+          }}
           variant={shared ? "contained" : "outlined"}
           startIcon={<ReplyOutlined />}
         >
@@ -123,15 +129,34 @@ export default function SchedulePage() {
         </Button>
       </Box>
       {shared && (
-        <TextField
+        <Box
           sx={{
+            display: "flex",
+            flexDirection: "row",
             ml: "160px",
             mt: "10px",
             width: "500px",
           }}
-          value={`${window.location.host}/schedule/${user.uid}`}
-          disabled
-        />
+        >
+          <IconButton
+            onClick={() => {
+              navigator.clipboard.writeText(
+                `${window.location.host}/schedule/${user.uid}`
+              );
+              Swal.fire({
+                icon: "info",
+                title: "schedule link has been copied to clipboard",
+              });
+            }}
+          >
+            <ContentCopyOutlined />
+          </IconButton>
+          <TextField
+            sx={{}}
+            value={`${window.location.host}/schedule/${user.uid}`}
+            disabled
+          />
+        </Box>
       )}
       <Box sx={{ height: "600px", m: "30px" }}>
         {/* <Calendar
