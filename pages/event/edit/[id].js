@@ -35,20 +35,21 @@ export default function EventPage() {
   };
 
   useEffect(() => {
-    const fetchEvent = async () => {
-      const docSnap = await getDoc(
-        doc(db, process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION, id)
-      );
-      const event = docSnap.data();
-      setTitle(event.title);
-      setDescription(event.description);
-      setStartDate(event.start.toDate());
-      setEndDate(event.end.toDate());
-      setIsLoading(false);
-    };
-    fetchEvent();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (id) {
+      const fetchEvent = async () => {
+        const docSnap = await getDoc(
+          doc(db, process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION, id)
+        );
+        const event = docSnap.data();
+        setTitle(event.title);
+        setDescription(event.description);
+        setStartDate(event.start.toDate());
+        setEndDate(event.end.toDate());
+        setIsLoading(false);
+      };
+      fetchEvent();
+    }
+  }, [id]);
   return (
     !isLoading && (
       <Box

@@ -19,11 +19,12 @@ export default function ProfilePage() {
         );
         const docSnap = await getDoc(docRef);
         const docData = docSnap.data();
+        console.log(docSnap.id);
         setDocument(docData);
         setIsLoading(false);
       };
       fetchUser();
     }
-  }, []);
+  }, [user]);
   return <div>{!isLoading && <UserProfile doc={document} />}</div>;
 }

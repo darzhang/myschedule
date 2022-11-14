@@ -1,4 +1,5 @@
-import { Box, Button, Typography } from "@mui/material";
+import { ReplyOutlined, ShareOutlined } from "@mui/icons-material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import {
   arrayRemove,
   collection,
@@ -8,13 +9,10 @@ import {
   getDoc,
   getDocs,
   query,
-  Timestamp,
   updateDoc,
   where,
 } from "firebase/firestore";
-import moment from "moment";
 import { useEffect, useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
 import Swal from "sweetalert2";
 import AddEventDialog from "../../components/AddEventDialog";
 import ListEvent from "../../components/ListEvent";
@@ -22,21 +20,13 @@ import { db } from "../../config/firebase";
 import { useAuth } from "../../context/AuthContext";
 
 export default function SchedulePage() {
-  const localizer = momentLocalizer(moment); // or globalizeLocalizer
   const [events, setEvents] = useState([]);
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
+  const [shared, setShared] = useState(false);
 
   const onSubmit = (data) => {
     setEvents([...events, data]);
-  };
-
-  const handleSelectEvent = (event) => {
-    Swal.fire({
-      icon: "info",
-      title: event.title,
-      text: event.description,
-    });
   };
 
   const handleDelete = (eventId, title) => {
@@ -104,8 +94,7 @@ export default function SchedulePage() {
       };
       fetchEvents();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -117,13 +106,33 @@ export default function SchedulePage() {
       <Typography sx={{ mb: "10px", flexGrow: 1 }} align="center" variant="h3">
         Schedule
       </Typography>
-      <Button
-        sx={{ m: "0 30px" }}
-        onClick={() => setOpen(true)}
-        variant="outlined"
-      >
-        Add Event
-      </Button>
+      <Box>
+        <Button
+          sx={{ ml: "30px", mr: "10px" }}
+          onClick={() => setOpen(true)}
+          variant="outlined"
+        >
+          Add Event
+        </Button>
+        <Button
+          onClick={() => setShared(!shared)}
+          variant={shared ? "contained" : "outlined"}
+          startIcon={<ReplyOutlined />}
+        >
+          Share
+        </Button>
+      </Box>
+      {shared && (
+        <TextField
+          sx={{
+            ml: "160px",
+            mt: "10px",
+            width: "500px",
+          }}
+          value={`${window.location.host}/schedule/${user.uid}`}
+          disabled
+        />
+      )}
       <Box sx={{ height: "600px", m: "30px" }}>
         {/* <Calendar
           localizer={localizer}
