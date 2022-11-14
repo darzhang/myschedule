@@ -19,7 +19,7 @@ export default function ListEvent({ events, handleDelete }) {
         {events.map((event, index) => {
           return (
             <Box key={index}>
-              <ListItemButton>
+              <ListItemButton onClick={() => router.push(`/event/${event.id}`)}>
                 <ListItemText
                   primary={event.title}
                   secondary={`${moment(event.start).format(
