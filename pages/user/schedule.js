@@ -65,24 +65,33 @@ export default function SchedulePage() {
 
   useEffect(() => {
     if (user) {
+      // fetch events in batches of 10 events each
       const fetchEvents = async () => {
+        const eventList = [];
         const eventIds = await fetchEventIds();
-        if (eventIds.length > 0) {
-          const q = query(
-            collection(db, process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION),
-            where(documentId(), "in", eventIds)
-          );
-          const querySnapshot = await getDocs(q);
-          const eventList = [];
-          querySnapshot.forEach((doc) => {
-            const oneEvent = doc.data();
-            oneEvent.id = doc.id;
-            oneEvent.start = oneEvent.start.toDate();
-            oneEvent.end = oneEvent.end.toDate();
-            eventList.push(oneEvent);
-          });
-          setEvents([...eventList]);
+        const lastBatch = eventIds.length % 10;
+        const numBatch =
+          Math.floor(eventIds.length / 10) + (lastBatch > 0 ? 1 : 0);
+        if (numBatch > 0) {
+          for (let i = 0; i < numBatch; i++) {
+            const index = i * 10;
+            const idList = eventIds.slice(index, index + 10);
+            const q = query(
+              collection(db, process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION),
+              where(documentId(), "in", idList)
+            );
+            const querySnapshot = await getDocs(q);
+
+            querySnapshot.forEach((doc) => {
+              const oneEvent = doc.data();
+              oneEvent.id = doc.id;
+              oneEvent.start = oneEvent.start.toDate();
+              oneEvent.end = oneEvent.end.toDate();
+              eventList.push(oneEvent);
+            });
+          }
         }
+        setEvents([...eventList]);
       };
       const fetchEventIds = async () => {
         const userRef = doc(
