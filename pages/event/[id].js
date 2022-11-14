@@ -1,4 +1,5 @@
-import { TextField, Typography } from "@mui/material";
+import { DeleteOutline, EditOutlined } from "@mui/icons-material";
+import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { doc, getDoc } from "firebase/firestore";
 import moment from "moment";
@@ -50,6 +51,19 @@ export default function EventPage() {
           defaultValue={moment(event.end.toDate()).format("DD/MM/YYYY hh:mm a")}
           inputProps={{ readOnly: true }}
         />
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Button
+            onClick={() => router.push(`/event/edit/${id}`)}
+            variant="outlined"
+            startIcon={<EditOutlined />}
+            sx={{ mb: "10px" }}
+          >
+            Edit
+          </Button>
+          <Button variant="outlined" startIcon={<DeleteOutline />}>
+            Delete
+          </Button>
+        </Box>
       </Box>
     )
   );
