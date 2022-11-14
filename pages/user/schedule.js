@@ -135,7 +135,6 @@ export default function SchedulePage() {
             flexDirection: "row",
             ml: "160px",
             mt: "10px",
-            width: "500px",
           }}
         >
           <IconButton
@@ -145,14 +144,13 @@ export default function SchedulePage() {
               );
               Swal.fire({
                 icon: "info",
-                title: "schedule link has been copied to clipboard",
+                title: "Schedule link has been copied to clipboard",
               });
             }}
           >
             <ContentCopyOutlined />
           </IconButton>
           <TextField
-            sx={{}}
             value={`${window.location.host}/schedule/${user.uid}`}
             disabled
           />
