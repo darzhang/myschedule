@@ -81,8 +81,11 @@ export default function EventOverview() {
         {events.map((event, index) => {
           return (
             <Box key={index}>
-              <ListItemButton>
-                <div onClick={() => router.push(`/event/${event.id}`)}>
+              <ListItemButton sx={{ display: "flex", flexDirection: "row" }}>
+                <div
+                  style={{ flexGrow: 1 }}
+                  onClick={() => router.push(`/event/${event.id}`)}
+                >
                   <Typography>{event.title}</Typography>
                   <Typography variant="body2" color={"gray"}>
                     {"Start: " +

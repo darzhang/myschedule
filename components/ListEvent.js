@@ -39,8 +39,10 @@ export default function ListEvent({ events, handleDelete, view }) {
           ? events.map((event, index) => {
               return view ? (
                 <Box key={index}>
-                  <ListItemButton>
-                    <div>
+                  <ListItemButton
+                    sx={{ display: "flex", flexDirection: "row" }}
+                  >
+                    <div style={{ flexGrow: 1 }}>
                       <Typography>{event.title}</Typography>
                       <Typography variant="body2" color={"gray"}>
                         {"Start: " +
@@ -86,8 +88,10 @@ export default function ListEvent({ events, handleDelete, view }) {
           : futureEvents.map((event, index) => {
               return view ? (
                 <Box key={index}>
-                  <ListItemButton>
-                    <div>
+                  <ListItemButton
+                    sx={{ display: "flex", flexDirection: "row" }}
+                  >
+                    <div style={{ flexGrow: 1 }}>
                       <Typography>{event.title}</Typography>
                       <Typography variant="body2" color={"gray"}>
                         {"Start: " +
