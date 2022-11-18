@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import EventOverview from "../components/EventOverview";
 import HomeBanner from "../components/HomeBanner";
 import { useAuth } from "../context/AuthContext";
 
@@ -18,11 +19,7 @@ export default function Home() {
       <Typography sx={{ mb: "20px" }} variant="h2">
         Home
       </Typography>
-      {user ? (
-        <Typography variant> Your next 5 event</Typography>
-      ) : (
-        <HomeBanner />
-      )}
+      {user ? <EventOverview /> : <HomeBanner />}
     </Box>
   );
 }

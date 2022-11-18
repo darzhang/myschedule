@@ -91,14 +91,7 @@ export default function SchedulePage() {
           >
             {user.name}&apos;s Schedule
           </Typography>
-          <Box sx={{ height: "600px", m: "30px" }}>
-            {/* <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          onSelectEvent={handleSelectEvent}
-        /> */}
+          <Box sx={{ m: "0px 20px" }}>
             <ListEvent events={events} view={true} />
           </Box>
         </>
