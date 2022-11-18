@@ -29,30 +29,34 @@ export default function SchedulePage() {
         if (eventIds == null) {
           setFalseUser(true);
           return;
-        }
-        const lastBatch = eventIds.length % 10;
-        const numBatch =
-          Math.floor(eventIds.length / 10) + (lastBatch > 0 ? 1 : 0);
-        if (numBatch > 0) {
-          for (let i = 0; i < numBatch; i++) {
-            const index = i * 10;
-            const idList = eventIds.slice(index, index + 10);
-            const q = query(
-              collection(db, process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION),
-              where(documentId(), "in", idList)
-            );
-            const querySnapshot = await getDocs(q);
+        } else {
+          const lastBatch = eventIds.length % 10;
+          const numBatch =
+            Math.floor(eventIds.length / 10) + (lastBatch > 0 ? 1 : 0);
+          if (numBatch > 0) {
+            for (let i = 0; i < numBatch; i++) {
+              const index = i * 10;
+              const idList = eventIds.slice(index, index + 10);
+              const q = query(
+                collection(
+                  db,
+                  process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION
+                ),
+                where(documentId(), "in", idList)
+              );
+              const querySnapshot = await getDocs(q);
 
-            querySnapshot.forEach((doc) => {
-              const oneEvent = doc.data();
-              oneEvent.id = doc.id;
-              oneEvent.start = oneEvent.start.toDate();
-              oneEvent.end = oneEvent.end.toDate();
-              eventList.push(oneEvent);
-            });
+              querySnapshot.forEach((doc) => {
+                const oneEvent = doc.data();
+                oneEvent.id = doc.id;
+                oneEvent.start = oneEvent.start.toDate();
+                oneEvent.end = oneEvent.end.toDate();
+                eventList.push(oneEvent);
+              });
+            }
           }
+          setEvents([...eventList]);
         }
-        setEvents([...eventList]);
       };
       const fetchEventIds = async () => {
         const userRef = doc(

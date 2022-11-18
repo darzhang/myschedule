@@ -1,7 +1,13 @@
 import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc,
+  getDoc,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -15,6 +21,7 @@ export default function EventPage() {
   const [event, setEvent] = useState({});
   const { user } = useAuth;
   const [isLoading, setIsLoading] = useState(true);
+  const [falseEvent, setFalseEvent] = useState(false);
 
   const handleDelete = () => {
     Swal.fire({
@@ -46,65 +53,73 @@ export default function EventPage() {
         const docSnap = await getDoc(
           doc(db, process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION, id)
         );
-        setEvent(docSnap.data());
         setIsLoading(false);
+        if (docSnap.data() == null) {
+          setFalseEvent(true);
+          return;
+        } else {
+          setEvent(docSnap.data());
+        }
       };
       fetchEvent();
     }
   }, [id]);
   return (
     <>
-      {!isLoading && (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h3">{event.title}</Typography>
-          <TextField
-            multiline
-            sx={{ m: "10px", width: "250px" }}
-            label={"Description"}
-            defaultValue={event.description}
-            inputProps={{ readOnly: true }}
-          />
-          <TextField
-            sx={{ m: "10px", width: "250px" }}
-            label={"Start Time"}
-            defaultValue={moment(event.start.toDate()).format(
-              "DD/MM/YYYY hh:mm a"
-            )}
-            inputProps={{ readOnly: true }}
-          />
-          <TextField
-            sx={{ m: "10px", width: "250px" }}
-            label={"End Time"}
-            defaultValue={moment(event.end.toDate()).format(
-              "DD/MM/YYYY hh:mm a"
-            )}
-            inputProps={{ readOnly: true }}
-          />
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Button
-              onClick={() => router.push(`/event/edit/${id}`)}
-              variant="outlined"
-              startIcon={<EditOutlined />}
-              sx={{ mb: "10px" }}
-            >
-              Edit
-            </Button>
-            <Button
-              onClick={handleDelete}
-              variant="outlined"
-              startIcon={<DeleteOutline />}
-            >
-              Delete
-            </Button>
+      {!isLoading &&
+        (falseEvent ? (
+          <Typography variant="h3">No event can be found</Typography>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h3">{event.title}</Typography>
+            <TextField
+              multiline
+              sx={{ m: "10px", width: "250px" }}
+              label={"Description"}
+              defaultValue={event.description}
+              inputProps={{ readOnly: true }}
+            />
+            <TextField
+              sx={{ m: "10px", width: "250px" }}
+              label={"Start Time"}
+              defaultValue={moment(event.start.toDate()).format(
+                "DD/MM/YYYY hh:mm a"
+              )}
+              inputProps={{ readOnly: true }}
+            />
+            <TextField
+              sx={{ m: "10px", width: "250px" }}
+              label={"End Time"}
+              defaultValue={moment(event.end.toDate()).format(
+                "DD/MM/YYYY hh:mm a"
+              )}
+              inputProps={{ readOnly: true }}
+            />
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Button
+                onClick={() => router.push(`/event/edit/${id}`)}
+                variant="outlined"
+                startIcon={<EditOutlined />}
+                sx={{ mb: "10px" }}
+              >
+                Edit
+              </Button>
+              <Button
+                onClick={handleDelete}
+                variant="outlined"
+                startIcon={<DeleteOutline />}
+              >
+                Delete
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      )}
+        ))}
     </>
   );
 }
