@@ -77,7 +77,9 @@ export default function EventPage() {
               alignItems: "center",
             }}
           >
-            <Typography variant="h3">{event.title}</Typography>
+            <Typography sx={{ mb: "20px" }} variant="h3">
+              {event.title}
+            </Typography>
             <TextField
               multiline
               sx={{ m: "10px", width: "250px" }}

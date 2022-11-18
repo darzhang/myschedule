@@ -55,7 +55,9 @@ export default function EventPage() {
       <Box
         sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
-        <Typography variant="h3">Edit Event</Typography>
+        <Typography sx={{ mb: "20px" }} variant="h3">
+          Edit Event
+        </Typography>
         <TextField
           multiline
           sx={{ m: "10px", width: "250px" }}

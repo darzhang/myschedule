@@ -5,7 +5,9 @@ export default function UserProfile({ doc }) {
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <Typography variant="h3">User Profile</Typography>
+      <Typography sx={{ mb: "20px" }} variant="h3">
+        User Profile
+      </Typography>
       {Object.keys(doc).map((key, index) => {
         return (
           <div key={index}>

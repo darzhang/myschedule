@@ -116,7 +116,7 @@ export default function SchedulePage() {
         handleClose={() => setOpen(false)}
         onSubmit={onSubmit}
       />
-      <Typography sx={{ mb: "10px", flexGrow: 1 }} align="center" variant="h3">
+      <Typography sx={{ mb: "20px", flexGrow: 1 }} align="center" variant="h3">
         Schedule
       </Typography>
       <Box>
