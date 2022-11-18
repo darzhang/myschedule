@@ -1,17 +1,44 @@
 import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import { db } from "../../config/firebase";
+import { useAuth } from "../../context/AuthContext";
 
 export default function EventPage() {
   const router = useRouter();
   const { id } = router.query;
   const [event, setEvent] = useState({});
+  const { user } = useAuth;
   const [isLoading, setIsLoading] = useState(true);
+
+  const handleDelete = () => {
+    Swal.fire({
+      icon: "warning",
+      title: "Delete Event",
+      text: `Are you sure you want to delete "${event.title}"`,
+      showDenyButton: true,
+      confirmButtonText: "Delete",
+      denyButtonText: "Cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteDoc(
+          doc(db, process.env.NEXT_PUBLIC_FIREBASE_EVENT_COLLECTION, id)
+        );
+        await updateDoc(
+          doc(db, process.env.NEXT_PUBLIC_FIREBASE_USER_COLLECTION, user.uid),
+          {
+            events: arrayRemove(id),
+          }
+        );
+        router.push("/user/schedule");
+      }
+    });
+  };
 
   useEffect(() => {
     if (id) {
@@ -68,7 +95,11 @@ export default function EventPage() {
             >
               Edit
             </Button>
-            <Button variant="outlined" startIcon={<DeleteOutline />}>
+            <Button
+              onClick={handleDelete}
+              variant="outlined"
+              startIcon={<DeleteOutline />}
+            >
               Delete
             </Button>
           </Box>
