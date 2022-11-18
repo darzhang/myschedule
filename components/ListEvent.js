@@ -42,9 +42,18 @@ export default function ListEvent({ events, handleDelete, view }) {
                   <ListItemButton>
                     <ListItemText
                       primary={event.title}
-                      secondary={`${moment(event.start).format(
-                        "DD/MM/YYYY h:mm a"
-                      )} - ${moment(event.end).format("DD/MM/YYYY h:mm a")}`}
+                      secondary={
+                        <>
+                          <Typography variant="body2">
+                            {"Start: " +
+                              moment(event.start).format("DD/MM/YYYY h:mm a")}
+                          </Typography>
+                          <Typography variant="body2">
+                            {"End: " +
+                              moment(event.end).format("DD/MM/YYYY h:mm a")}
+                          </Typography>
+                        </>
+                      }
                     />
                   </ListItemButton>
                   <Divider />
@@ -54,9 +63,18 @@ export default function ListEvent({ events, handleDelete, view }) {
                   <ListItemButton>
                     <ListItemText
                       primary={event.title}
-                      secondary={`${moment(event.start).format(
-                        "DD/MM/YYYY h:mm a"
-                      )} - ${moment(event.end).format("DD/MM/YYYY h:mm a")}`}
+                      secondary={
+                        <>
+                          <Typography variant="body2">
+                            {"Start: " +
+                              moment(event.start).format("DD/MM/YYYY h:mm a")}
+                          </Typography>
+                          <Typography variant="body2">
+                            {"End: " +
+                              moment(event.end).format("DD/MM/YYYY h:mm a")}
+                          </Typography>
+                        </>
+                      }
                       onClick={() => router.push(`/event/${event.id}`)}
                     />
                     <IconButton
@@ -75,9 +93,18 @@ export default function ListEvent({ events, handleDelete, view }) {
                   <ListItemButton>
                     <ListItemText
                       primary={event.title}
-                      secondary={`${moment(event.start).format(
-                        "DD/MM/YYYY h:mm a"
-                      )} - ${moment(event.end).format("DD/MM/YYYY h:mm a")}`}
+                      secondary={
+                        <>
+                          <Typography variant="body2">
+                            {"Start: " +
+                              moment(event.start).format("DD/MM/YYYY h:mm a")}
+                          </Typography>
+                          <Typography variant="body2">
+                            {"End: " +
+                              moment(event.end).format("DD/MM/YYYY h:mm a")}
+                          </Typography>
+                        </>
+                      }
                     />
                   </ListItemButton>
                   <Divider />
@@ -87,9 +114,18 @@ export default function ListEvent({ events, handleDelete, view }) {
                   <ListItemButton>
                     <ListItemText
                       primary={event.title}
-                      secondary={`${moment(event.start).format(
-                        "DD/MM/YYYY h:mm a"
-                      )} - ${moment(event.end).format("DD/MM/YYYY h:mm a")}`}
+                      secondary={
+                        <>
+                          <Typography variant="body2">
+                            {"Start: " +
+                              moment(event.start).format("DD/MM/YYYY h:mm a")}
+                          </Typography>
+                          <Typography variant="body2">
+                            {"End: " +
+                              moment(event.end).format("DD/MM/YYYY h:mm a")}
+                          </Typography>
+                        </>
+                      }
                       onClick={() => router.push(`/event/${event.id}`)}
                     />
                     <IconButton
