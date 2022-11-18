@@ -23,8 +23,8 @@ export default function ListEvent({ events, handleDelete, view }) {
                 <ListItemText
                   primary={event.title}
                   secondary={`${moment(event.start).format(
-                    "DD/mm/YYYY h:mm a"
-                  )} - ${moment(event.end).format("DD/mm/YYYY h:mm a")}`}
+                    "DD/MM/YYYY h:mm a"
+                  )} - ${moment(event.end).format("DD/MM/YYYY h:mm a")}`}
                 />
               </ListItemButton>
               <Divider />
@@ -35,8 +35,8 @@ export default function ListEvent({ events, handleDelete, view }) {
                 <ListItemText
                   primary={event.title}
                   secondary={`${moment(event.start).format(
-                    "DD/mm/YYYY h:mm a"
-                  )} - ${moment(event.end).format("DD/mm/YYYY h:mm a")}`}
+                    "DD/MM/YYYY h:mm a"
+                  )} - ${moment(event.end).format("DD/MM/YYYY h:mm a")}`}
                 />
                 <IconButton onClick={() => handleDelete(event.id, event.title)}>
                   <DeleteOutline />
