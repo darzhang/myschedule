@@ -19,7 +19,6 @@ export default function ProfilePage() {
         );
         const docSnap = await getDoc(docRef);
         const docData = docSnap.data();
-        console.log(docSnap.id);
         setDocument(docData);
         setIsLoading(false);
       };

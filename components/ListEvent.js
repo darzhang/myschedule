@@ -40,43 +40,39 @@ export default function ListEvent({ events, handleDelete, view }) {
               return view ? (
                 <Box key={index}>
                   <ListItemButton>
-                    <ListItemText
-                      primary={event.title}
-                      secondary={
-                        <>
-                          <Typography variant="body2">
-                            {"Start: " +
-                              moment(event.start).format("DD/MM/YYYY h:mm a")}
-                          </Typography>
-                          <Typography variant="body2">
-                            {"End: " +
-                              moment(event.end).format("DD/MM/YYYY h:mm a")}
-                          </Typography>
-                        </>
-                      }
-                    />
+                    <div>
+                      <Typography>{event.title}</Typography>
+                      <Typography variant="body2" color={"gray"}>
+                        {"Start: " +
+                          moment(event.start).format("DD/MM/YYYY h:mm a")}
+                      </Typography>
+                      <Typography variant="body2" color={"gray"}>
+                        {"End: " +
+                          moment(event.end).format("DD/MM/YYYY h:mm a")}
+                      </Typography>
+                    </div>
                   </ListItemButton>
                   <Divider />
                 </Box>
               ) : (
                 <Box key={index}>
-                  <ListItemButton>
-                    <ListItemText
-                      primary={event.title}
-                      secondary={
-                        <>
-                          <Typography variant="body2">
-                            {"Start: " +
-                              moment(event.start).format("DD/MM/YYYY h:mm a")}
-                          </Typography>
-                          <Typography variant="body2">
-                            {"End: " +
-                              moment(event.end).format("DD/MM/YYYY h:mm a")}
-                          </Typography>
-                        </>
-                      }
+                  <ListItemButton
+                    sx={{ display: "flex", flexDirection: "row" }}
+                  >
+                    <div
+                      style={{ flexGrow: 1 }}
                       onClick={() => router.push(`/event/${event.id}`)}
-                    />
+                    >
+                      <Typography>{event.title}</Typography>
+                      <Typography variant="body2" color={"gray"}>
+                        {"Start: " +
+                          moment(event.start).format("DD/MM/YYYY h:mm a")}
+                      </Typography>
+                      <Typography variant="body2" color={"gray"}>
+                        {"End: " +
+                          moment(event.end).format("DD/MM/YYYY h:mm a")}
+                      </Typography>
+                    </div>
                     <IconButton
                       onClick={() => handleDelete(event.id, event.title)}
                     >
@@ -91,43 +87,39 @@ export default function ListEvent({ events, handleDelete, view }) {
               return view ? (
                 <Box key={index}>
                   <ListItemButton>
-                    <ListItemText
-                      primary={event.title}
-                      secondary={
-                        <>
-                          <Typography variant="body2">
-                            {"Start: " +
-                              moment(event.start).format("DD/MM/YYYY h:mm a")}
-                          </Typography>
-                          <Typography variant="body2">
-                            {"End: " +
-                              moment(event.end).format("DD/MM/YYYY h:mm a")}
-                          </Typography>
-                        </>
-                      }
-                    />
+                    <div>
+                      <Typography>{event.title}</Typography>
+                      <Typography variant="body2" color={"gray"}>
+                        {"Start: " +
+                          moment(event.start).format("DD/MM/YYYY h:mm a")}
+                      </Typography>
+                      <Typography variant="body2" color={"gray"}>
+                        {"End: " +
+                          moment(event.end).format("DD/MM/YYYY h:mm a")}
+                      </Typography>
+                    </div>
                   </ListItemButton>
                   <Divider />
                 </Box>
               ) : (
                 <Box key={index}>
-                  <ListItemButton>
-                    <ListItemText
-                      primary={event.title}
-                      secondary={
-                        <>
-                          <Typography variant="body2">
-                            {"Start: " +
-                              moment(event.start).format("DD/MM/YYYY h:mm a")}
-                          </Typography>
-                          <Typography variant="body2">
-                            {"End: " +
-                              moment(event.end).format("DD/MM/YYYY h:mm a")}
-                          </Typography>
-                        </>
-                      }
+                  <ListItemButton
+                    sx={{ display: "flex", flexDirection: "row" }}
+                  >
+                    <div
+                      style={{ flexGrow: 1 }}
                       onClick={() => router.push(`/event/${event.id}`)}
-                    />
+                    >
+                      <Typography>{event.title}</Typography>
+                      <Typography variant="body2" color={"gray"}>
+                        {"Start: " +
+                          moment(event.start).format("DD/MM/YYYY h:mm a")}
+                      </Typography>
+                      <Typography variant="body2" color={"gray"}>
+                        {"End: " +
+                          moment(event.end).format("DD/MM/YYYY h:mm a")}
+                      </Typography>
+                    </div>
                     <IconButton
                       onClick={() => handleDelete(event.id, event.title)}
                     >

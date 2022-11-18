@@ -82,22 +82,16 @@ export default function EventOverview() {
           return (
             <Box key={index}>
               <ListItemButton>
-                <ListItemText
-                  primary={event.title}
-                  secondary={
-                    <>
-                      <Typography variant="body2">
-                        {"Start: " +
-                          moment(event.start).format("DD/MM/YYYY h:mm a")}
-                      </Typography>
-                      <Typography variant="body2">
-                        {"End: " +
-                          moment(event.end).format("DD/MM/YYYY h:mm a")}
-                      </Typography>
-                    </>
-                  }
-                  onClick={() => router.push(`/event/${event.id}`)}
-                />
+                <div onClick={() => router.push(`/event/${event.id}`)}>
+                  <Typography>{event.title}</Typography>
+                  <Typography variant="body2" color={"gray"}>
+                    {"Start: " +
+                      moment(event.start).format("DD/MM/YYYY h:mm a")}
+                  </Typography>
+                  <Typography variant="body2" color={"gray"}>
+                    {"End: " + moment(event.end).format("DD/MM/YYYY h:mm a")}
+                  </Typography>
+                </div>
               </ListItemButton>
               <Divider />
             </Box>
