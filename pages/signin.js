@@ -30,7 +30,9 @@ export default function SignInPage() {
           width: "200px",
         }}
       >
-        <Typography variant="h3">Sign In</Typography>
+        <Typography sx={{ mb: "20px" }} variant="h3">
+          Sign In
+        </Typography>
         <InputField
           name={"email"}
           control={control}

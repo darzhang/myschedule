@@ -74,7 +74,7 @@ export default function EventOverview() {
   }, [user]);
   return (
     <>
-      <Typography align="start" variant="h6">
+      <Typography align="left" variant="h6">
         Your Next Five Events
       </Typography>
       <List>
