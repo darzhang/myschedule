@@ -5,6 +5,7 @@ import {
   documentId,
   getDoc,
   getDocs,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -54,6 +55,7 @@ export default function SchedulePage() {
                 eventList.push(oneEvent);
               });
             }
+            eventList.sort((a, b) => a.start - b.start);
           }
           setEvents([...eventList]);
         }
@@ -97,7 +99,7 @@ export default function SchedulePage() {
           endAccessor="end"
           onSelectEvent={handleSelectEvent}
         /> */}
-            <ListEvent events={events} view={"true"} />
+            <ListEvent events={events} view={true} />
           </Box>
         </>
       )}

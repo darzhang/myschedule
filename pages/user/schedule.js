@@ -19,6 +19,7 @@ import {
   documentId,
   getDoc,
   getDocs,
+  orderBy,
   query,
   updateDoc,
   where,
@@ -91,6 +92,7 @@ export default function SchedulePage() {
               eventList.push(oneEvent);
             });
           }
+          eventList.sort((a, b) => a.start - b.start);
         }
         setEvents([...eventList]);
       };
@@ -169,7 +171,7 @@ export default function SchedulePage() {
         </Box>
       )}
       <Box sx={{ m: "0px 20px" }}>
-        <ListEvent events={events} handleDelete={handleDelete} />
+        <ListEvent events={events} handleDelete={handleDelete} view={false} />
       </Box>
     </>
   );
