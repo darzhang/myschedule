@@ -119,7 +119,7 @@ export default function SchedulePage() {
       </Typography>
       <Box>
         <Button
-          sx={{ ml: "30px", mr: "10px" }}
+          sx={{ ml: "20px", mr: "10px" }}
           onClick={() => setOpen(true)}
           variant="outlined"
         >
@@ -138,10 +138,9 @@ export default function SchedulePage() {
       {shared && (
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "row",
             ml: "160px",
             mt: "10px",
+            mr: "10px",
           }}
         >
           <TextField
@@ -169,14 +168,7 @@ export default function SchedulePage() {
           />
         </Box>
       )}
-      <Box sx={{ height: "600px", m: "30px" }}>
-        {/* <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          onSelectEvent={handleSelectEvent}
-        /> */}
+      <Box sx={{ m: "0px 20px" }}>
         <ListEvent events={events} handleDelete={handleDelete} />
       </Box>
     </>
