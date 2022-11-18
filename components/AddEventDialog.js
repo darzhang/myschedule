@@ -45,6 +45,8 @@ export default function AddEventDialog({ open, handleClose, onSubmit }) {
       }
     );
 
+    event.id = docRef.id;
+
     // using the event document id above, update the user event list to include the new event
     await updateDoc(
       doc(db, process.env.NEXT_PUBLIC_FIREBASE_USER_COLLECTION, user.uid),
