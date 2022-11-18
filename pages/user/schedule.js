@@ -3,7 +3,14 @@ import {
   ReplyOutlined,
   ShareOutlined,
 } from "@mui/icons-material";
-import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 import {
   arrayRemove,
   collection,
@@ -137,22 +144,28 @@ export default function SchedulePage() {
             mt: "10px",
           }}
         >
-          <IconButton
-            onClick={() => {
-              navigator.clipboard.writeText(
-                `${window.location.host}/schedule/${user.uid}`
-              );
-              Swal.fire({
-                icon: "info",
-                title: "Schedule link has been copied to clipboard",
-              });
-            }}
-          >
-            <ContentCopyOutlined />
-          </IconButton>
           <TextField
             value={`${window.location.host}/schedule/${user.uid}`}
             disabled
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `${window.location.host}/schedule/${user.uid}`
+                      );
+                      Swal.fire({
+                        icon: "info",
+                        title: "Schedule link has been copied to clipboard",
+                      });
+                    }}
+                  >
+                    <ContentCopyOutlined />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         </Box>
       )}
