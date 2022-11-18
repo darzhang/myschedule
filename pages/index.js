@@ -12,11 +12,11 @@ export default function Home() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         justifyContent: "center",
+        m: "0px 20px",
       }}
     >
-      <Typography sx={{ mb: "20px" }} variant="h2">
+      <Typography align="center" sx={{ mb: "20px" }} variant="h2">
         Home
       </Typography>
       {user ? <EventOverview /> : <HomeBanner />}

@@ -17,7 +17,7 @@ import { useState } from "react";
 
 export default function ListEvent({ events, handleDelete, view }) {
   const router = useRouter();
-  const futureEvents = events.filter((event) => event.start > new Date());
+  const futureEvents = events.filter((event) => event.end > new Date());
   const [checked, setChecked] = useState(false);
 
   return (
