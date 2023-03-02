@@ -11,3 +11,5 @@ This app is still in development progress
 First, create a firebase project and input the firebase configuration into the newly created  .env.local file in the root folder.
 
 Then to run, use the command "npm run dev"
+
+Or you can view the app on [MySchedule](https://myschedule-red.vercel.app/)
